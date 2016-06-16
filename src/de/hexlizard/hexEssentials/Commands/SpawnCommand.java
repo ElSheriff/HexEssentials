@@ -38,16 +38,7 @@ public class SpawnCommand extends Command{
 			if(sender instanceof Player){
 				if(checkPerms((Player) sender, label, args)){
 					Player p = (Player) sender;
-					// TODO spawn aus config auslesen
-					World w = Bukkit.getWorld(main.getConfig().getString("spawn.world"));
-					Double x = main.getConfig().getDouble("spawn.x");
-					Double y = main.getConfig().getDouble("spawn.y");
-					Double z = main.getConfig().getDouble("spawn.z");
-					
-					
-					
-					
-					p.teleport(new Location(w, x, y, z));
+					p.teleport(main.deserializeLocation(main.getConfig().getString("spawn")));
 				}else{
 					noPerms((Player) sender, label, args);
 				}

@@ -1,6 +1,6 @@
 name: HexEssentials
 author: HexLizard
-version: 0.0.4.0_Alpha
+version: 0.0.4.1_Alpha
 main: de.hexlizard.hexEssentials.Main
 commands:
     deletewarp:
