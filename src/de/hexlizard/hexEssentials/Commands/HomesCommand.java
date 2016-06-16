@@ -52,11 +52,9 @@ public class HomesCommand extends Command{
 				
 			}else{
 				sender.sendMessage(Colorize.colorize(language.getString("not_for_console_message").replaceAll("%command%", label)));
-			}
-			
+			}			
 			return true;
 		}							
-		// TODO Auto-generated method stub
 		return false;
 	}
 

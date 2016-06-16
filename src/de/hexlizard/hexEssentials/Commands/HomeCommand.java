@@ -59,7 +59,6 @@ public class HomeCommand extends Command{
 						sender.sendMessage(Colorize.colorize(language.getString("invalid_arguments_message")));
 						return false;
 					}
-					sender.sendMessage(Colorize.colorize(language.getString("not_implemented_yet_message")));
 					return true;
 				}else{
 					noPerms((Player)sender, label, args);

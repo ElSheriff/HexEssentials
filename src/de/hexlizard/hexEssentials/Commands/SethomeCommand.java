@@ -17,9 +17,7 @@
 package de.hexlizard.hexEssentials.Commands;
 
 
-import java.util.HashMap;
 
-import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -40,7 +38,6 @@ public class SethomeCommand extends Command{
 				if(checkPerms((Player) sender, label, args)){
 					Player p = (Player)sender;
 					PlayerConfig pc = new PlayerConfig(main, p);
-					HashMap<String, Location> homes = pc.getHomes();
 					if(args.length == 0){
 						pc.setHome("default", p.getLocation());
 						
