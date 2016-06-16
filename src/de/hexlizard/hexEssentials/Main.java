@@ -21,7 +21,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.Map.Entry;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -39,6 +41,7 @@ import de.hexlizard.hexEssentials.Commands.BlockCommand;
 import de.hexlizard.hexEssentials.Commands.ClearCommand;
 import de.hexlizard.hexEssentials.Commands.DayCommand;
 import de.hexlizard.hexEssentials.Commands.DeleteHomeCommand;
+import de.hexlizard.hexEssentials.Commands.DeleteWarpCommand;
 import de.hexlizard.hexEssentials.Commands.FlyCommand;
 import de.hexlizard.hexEssentials.Commands.GamemodeCommand;
 import de.hexlizard.hexEssentials.Commands.GodCommand;
@@ -124,13 +127,11 @@ public class Main extends JavaPlugin{
 		this.getConfig().addDefault("silktouch_spawner", false);
 		this.getConfig().addDefault("afk_nametag", true);
 		this.getConfig().addDefault("players_need_to_sleep_percent", 50);
-		this.getConfig().addDefault("spawn.world", Bukkit.getWorlds().get(0).getName());
-		this.getConfig().addDefault("spawn.x", Bukkit.getWorlds().get(0).getSpawnLocation().getX());
-		this.getConfig().addDefault("spawn.y", Bukkit.getWorlds().get(0).getSpawnLocation().getY());
-		this.getConfig().addDefault("spawn.z", Bukkit.getWorlds().get(0).getSpawnLocation().getZ());
+		this.getConfig().addDefault("spawn", Bukkit.getWorlds().get(0).getSpawnLocation().serialize().toString());		
 		this.getConfig().addDefault("enable_chatcolor", true);
 		this.getConfig().addDefault("sign_edit", true);
 		this.getConfig().addDefault("sneak_right_rename_mob", false);
+		this.getConfig().addDefault("warps", Arrays.asList("zero;{world="+Bukkit.getWorlds().get(0).getName()+", x=0, y=0, z=0, pitch=0, yaw=0}"));
 		
 		this.getConfig().options().copyDefaults(true);
 		this.saveConfig();
@@ -165,6 +166,14 @@ public class Main extends JavaPlugin{
 		this.languageConfig.addDefault("home_command_home_not_found_message", "Can't find Home %home%!");
 		this.languageConfig.addDefault("home_command_home_teleported_to_home_message", "Teleported to %home%! Welcome Home.");
 		this.languageConfig.addDefault("home_command_cant_delete_home_message", "You cant delete your bed and default home!");
+		this.languageConfig.addDefault("home_command_homes_message", "Homes: %homes%");
+		this.languageConfig.addDefault("home_command_created_message", "Created home %home%!");
+		this.languageConfig.addDefault("warp_command_warped_message", "You warped to %warppoint%!");
+		this.languageConfig.addDefault("warp_command_warp_not_found_message", "It looks like %warp% doesn't exist");
+		this.languageConfig.addDefault("warp_command_warps_message", "Warps: %warps%");
+		this.languageConfig.addDefault("warp_command_created_message", "Created warp %warp%!");
+		this.languageConfig.addDefault("warp_command_deleted_message", "You deleted warp %warp%!");
+		this.languageConfig.addDefault("warp_command_blacklist_name_message", "You can't use \"%warp%\" as a warpname!");
 		
 		this.languageConfig.options().copyDefaults(true);
 		
@@ -214,6 +223,7 @@ public class Main extends JavaPlugin{
 		this.getCommand("clear").setExecutor(new ClearCommand(this));
 		this.getCommand("day").setExecutor(new DayCommand(this));
 		this.getCommand("deletehome").setExecutor(new DeleteHomeCommand(this));
+		this.getCommand("deletewarp").setExecutor(new DeleteWarpCommand(this));
 		this.getCommand("fly").setExecutor(new FlyCommand(this));
 		this.getCommand("gamemode").setExecutor(new GamemodeCommand(this));
 		this.getCommand("god").setExecutor(new GodCommand(this));
@@ -285,7 +295,31 @@ public class Main extends JavaPlugin{
 		return languageConfig;
 	}
 	
-	
+	public HashMap<String, Location> getWarpPoints(){
+		HashMap<String, Location> warps = new HashMap<String, Location>();							
+		List<String> warpsList = (List<String>) this.getConfig().getList("warps");
+		List<String[]> data = new ArrayList<String[]>();		
+		for(String s : warpsList){
+			data.add(s.split(";"));
+		}
+		for(String[] sA0 : data){
+			warps.put(sA0[0], this.deserializeLocation(sA0[1]));						
+		}
+		return warps;
+	}
+	public void addWarpPoint(String name, Location location){
+		HashMap<String, Location> warps = this.getWarpPoints();
+		warps.put(name, location);
+		this.setWarpPoints(warps);
+	}
+	public void setWarpPoints(HashMap<String, Location> warppoints){
+		List<String> warpsToSafe = new ArrayList<String>();
+		for(Entry<String, Location> e : warppoints.entrySet()){
+			warpsToSafe.add(e.getKey()+";"+e.getValue().serialize().toString());
+		}				
+		this.getConfig().set("warps", warpsToSafe);
+		this.saveConfig();		
+	}
 	
 	public boolean playerOnline(String name){
 		if(Bukkit.getServer().getOnlinePlayers().contains(Bukkit.getPlayer(name))){

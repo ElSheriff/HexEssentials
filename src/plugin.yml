@@ -1,8 +1,12 @@
 name: HexEssentials
 author: HexLizard
-version: 0.0.3.8_Alpha
+version: 0.0.4.0_Alpha
 main: de.hexlizard.hexEssentials.Main
 commands:
+    deletewarp:
+        usage: /deletewarp <warp>
+        description: delete a warp
+        aliases: [delwarp]
     god:
         usage: /god
         description: become a god or become human again

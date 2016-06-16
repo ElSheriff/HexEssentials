@@ -23,15 +23,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.hexlizard.hexEssentials.Colorize;
+import de.hexlizard.hexEssentials.Language;
 import de.hexlizard.hexEssentials.Main;
 import de.hexlizard.hexEssentials.PlayerConfig;
 import de.hexlizard.hexEssentials.Commands.Command;
 
 public class HomeCommand extends Command{
-	
+	Language lang;
 	
 	public HomeCommand(Main main){
 		super(main);
+		lang = new Language(main);
 		
 	}
 
@@ -44,10 +46,11 @@ public class HomeCommand extends Command{
 					PlayerConfig pc = new PlayerConfig(main, (Player) sender);					
 					HashMap<String, Location> homes = pc.getHomes();					
 					if(args.length == 0){
-						//teleport playa to default home
+						//teleport player to default home
 						((Player) sender).teleport(homes.get("default"));
 						sender.sendMessage(Colorize.colorize(language.getString("home_command_home_teleported_to_home_message").replaceAll("%home%", "default")));
 					}else if(args.length == 1){
+						//Teleport player to chosen home
 						if(homes.containsKey(args[0])){
 							((Player) sender).teleport(homes.get(args[0]));
 							sender.sendMessage(Colorize.colorize(language.getString("home_command_home_teleported_to_home_message").replaceAll("%home%", args[0])));
@@ -56,7 +59,7 @@ public class HomeCommand extends Command{
 						}
 						return true;
 					}else{
-						sender.sendMessage(Colorize.colorize(language.getString("invalid_arguments_message")));
+						sender.sendMessage(lang.invalidArgs(label));
 						return false;
 					}
 					return true;
@@ -65,7 +68,7 @@ public class HomeCommand extends Command{
 					return true;
 				}				
 			}else{
-				sender.sendMessage(Colorize.colorize(language.getString("not_for_console_message").replaceAll("%command%", label)));
+				sender.sendMessage(lang.notForConsole(label));
 			}
 			
 			return true;

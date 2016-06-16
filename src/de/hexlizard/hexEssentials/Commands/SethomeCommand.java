@@ -22,13 +22,16 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.hexlizard.hexEssentials.Colorize;
+import de.hexlizard.hexEssentials.Language;
 import de.hexlizard.hexEssentials.Main;
 import de.hexlizard.hexEssentials.PlayerConfig;
 
 public class SethomeCommand extends Command{
+	Language lang;
 	
 	public SethomeCommand(Main main){
 		super(main);
+		lang = new Language(main);
 	}
 
 	@Override
@@ -40,20 +43,21 @@ public class SethomeCommand extends Command{
 					PlayerConfig pc = new PlayerConfig(main, p);
 					if(args.length == 0){
 						pc.setHome("default", p.getLocation());
-						
+						sender.sendMessage(Colorize.colorize("home_command_created_message").replaceAll("%home%", "default"));
 					}else if(args.length == 1){
 						if(args[0].equalsIgnoreCase("bed") == false){
 							pc.setHome(args[0], p.getLocation());
+							sender.sendMessage(Colorize.colorize("home_command_created_message").replaceAll("%home%", args[0]));
 						}
 					}else{
 						//invalid args
-						sender.sendMessage(Colorize.colorize(language.getString("invalid_arguments_message")));
+						sender.sendMessage(lang.invalidArgs(label));
 					}
 				}else{
 					noPerms((Player) sender, label, args);
 				}
 			}else{
-				sender.sendMessage(Colorize.colorize(language.getString("not_for_console_message").replaceAll("%command%", label)));
+				sender.sendMessage(lang.notForConsole(label));
 			}
 			
 			return true;

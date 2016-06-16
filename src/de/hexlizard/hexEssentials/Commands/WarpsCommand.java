@@ -17,11 +17,16 @@
 package de.hexlizard.hexEssentials.Commands;
 
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import de.hexlizard.hexEssentials.Colorize;
 import de.hexlizard.hexEssentials.Main;
+import de.hexlizard.hexEssentials.PlayerConfig;
 
 public class WarpsCommand extends Command{
 	
@@ -31,16 +36,23 @@ public class WarpsCommand extends Command{
 
 	@Override
 	public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {
-		if(label.equalsIgnoreCase("unblock")){
-			if(sender instanceof Player){
-				if(checkPerms((Player) sender, label, args)){
-					sender.sendMessage(Colorize.colorize(language.getString("not_implemented_yet_message")));
-				}else{
-					sender.sendMessage(Colorize.colorize(language.getString("no_permissions_message").replaceAll("%command%", label).replaceAll("%args%", args[0]).replaceAll("NULL", "")));
-				}
+		if(label.equalsIgnoreCase("warps")){
+			if(checkPerms(sender, label, args)){
+				HashMap<String, Location> warps = main.getWarpPoints();
+				String warpsMsg = "";								
+				if(warps.size() != 0){
+					for(Entry<String, Location>  e : warps.entrySet()){
+						warpsMsg = warpsMsg + e.getKey() + ", ";						
+					}
+					warpsMsg = warpsMsg.substring(0, warpsMsg.length()-2);
+					sender.sendMessage(warpsMsg);
+					
+				}	
+				sender.sendMessage(Colorize.colorize(language.getString("warp_command_warps_message").replaceAll("%warps%", warpsMsg)));
 			}else{
-				sender.sendMessage(Colorize.colorize(language.getString("not_for_console_message").replaceAll("%command%", label)));
+				noPerms(sender, label, args);
 			}
+			
 			
 			return true;
 		}							

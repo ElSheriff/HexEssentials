@@ -40,18 +40,18 @@ public class HomesCommand extends Command{
 				if(checkPerms((Player) sender, label, args)){
 					PlayerConfig pc = new PlayerConfig(main, (Player) sender);
 					HashMap<String, Location> homes = pc.getHomes();
-					String homesMsg = "Homes: ";									
+					String homesMsg = "";									
 					for(Entry<String, Location>  e : homes.entrySet()){
 						homesMsg = homesMsg + e.getKey() + ", ";						
 					}
 					homesMsg = homesMsg.substring(0, homesMsg.length()-2);
-					sender.sendMessage(homesMsg);			
+					sender.sendMessage(language.getString("home_command_homes_message").replaceAll("%homes%", homesMsg));			
 				}else{
-					sender.sendMessage(Colorize.colorize(language.getString("no_permissions_message").replaceAll("%command%", label).replaceAll("%args%", args[0]).replaceAll("NULL", "")));
+					noPerms(sender, label, args);
 				}
 				
 			}else{
-				sender.sendMessage(Colorize.colorize(language.getString("not_for_console_message").replaceAll("%command%", label)));
+				sender.sendMessage(lang.notForConsole(label));
 			}			
 			return true;
 		}							
