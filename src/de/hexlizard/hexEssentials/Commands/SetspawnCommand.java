@@ -44,7 +44,7 @@ public class SetspawnCommand extends Command{
 			if(sender instanceof Player){
 				if(checkPerms((Player) sender, label, args)){
 					Player p = (Player) sender;
-					main.getConfig().set("spawn.", p.getLocation().serialize().toString());
+					main.getConfig().set("spawn", p.getLocation().serialize().toString());
 					p.getWorld().setSpawnLocation((int) p.getLocation().getX(), (int) p.getLocation().getY(), (int) p.getLocation().getZ());
 					
 					main.saveConfig();
