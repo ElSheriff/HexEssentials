@@ -1,0 +1,118 @@
+name: HexEssentials
+author: HexLizard
+version: 0.0.3.8_Alpha
+main: de.hexlizard.hexEssentials.Main
+commands:
+    god:
+        usage: /god
+        description: become a god or become human again
+    op:
+        usage: /op <user>
+        description: give user op privilegs
+    ban:
+        usage: /ban <user> <reason> [local]
+        description: ban user globally or local
+    unban:
+        usage: /unban <user>
+        description: unban user on your server
+    test:
+        usage:
+        description:
+    motd:
+        usage: /motd [set] new motd
+        description: show or set current message of the day
+    killmob:
+        usage: /killmob [all/mobtype]
+        description: kill all mobs around you (all, hostile, friendly, sheep etc..)
+    spawnmob:
+        usage: /spawnmob <mobname>
+        description: spawn mob where you are looking at
+    afk:
+        usage: /afk
+        description: toggle your AFK mode
+    nick:
+        usage: /nick <new_name>
+        description: change your name on the server
+    spawn:
+        usage: /spawn
+        description: teleport to the spawn of the map
+    setspawn:
+        usage: /setspawn
+        desription: set the spawnpoint of the map
+    tpto:
+        usage: /tpto <name>
+        description: teleport to player
+    tphere:
+        usage: /tphere <name>
+        description: teleport player to you
+    hat:
+        usage: /hat
+        description: set the item in your hand as your hat
+    ops:
+        usage: /ops
+        description: show all operators
+    clear:
+        usage: /clear
+        description: clear your inventory
+        aliases: [cl]
+    deletehome:
+        usage: /deletehome home
+        description: delete home
+        aliases: [delhome]
+    homes:
+        usage: /homes
+        description: show your homes
+    home:
+        usage: /home [<name>]
+        description: teleport to your default home or another one
+        aliases: [h]
+    sethome:
+        usage: /sethome [<name>]
+        description: set your default home point or another one
+    warp:
+        usage: /warp <warp_name>
+        description: teleport to warppoint
+        aliases: [w]
+    warps:
+        usage: /warps
+        description: show all for you availiable warps
+    setwarp:
+        usage: /setwarp <warp_name>
+        description: create a new warppoint
+    fly:
+        usage: /fly
+        description: toggle your fly mode
+    msg:
+        usage: /msg <name> <message>
+        description: send a private message to someone
+    mute:
+        usage: /mute <name>
+        description: mute a player on the whole server
+    unmute:
+        usage: /unmute <name>
+        description: unmute someone you muted before
+    block:
+        usage: /block <name>
+        description: block a player
+    unblock:
+        usage: /unblock <name>
+        description: unblock someone you blocked befored
+    back:
+        usage: /back
+        description: teleport to your latest Deathpoint
+    gamemode:
+        usage: /gamemode <gamemode>
+        description: change your gamemode
+        aliases: [gm]
+    night:
+        usage: /night
+        description: change daytime to night
+    day:
+        usage: /day
+        description: change daytime to day
+    top:
+        usage: /top
+        description: teleport to the highest block above you
+    heal:
+        usage: /heal [<name>]
+        description: heal yourself or someone else
